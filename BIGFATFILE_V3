@@ -1,0 +1,1266 @@
+///////////////////////////PILE  H///////////////////////////////////////
+///////////////////////////PILE  H///////////////////////////////////////
+///////////////////////////PILE  H///////////////////////////////////////
+///////////////////////////PILE  H///////////////////////////////////////
+///////////////////////////PILE  H///////////////////////////////////////
+
+/************************************************************************************************/
+//Projet   : Projet TP_2_Labyrinthe
+//Fichier  : Module_Pile.c
+//Contenu  : Contient les fonction relatif � la cr�ation, modification et destruction de pile
+//Objectif : Cr�ation d'un algorithme de r�alisation de labyrinthe
+//Cr�ation : 20 Octobre 2014
+//                                                  Creer par Samuel - Link - Geoffroy-Heroux
+//                                                            Francis Masse
+//                                                            Christopher Dom
+//                                                            Vincent Lynch
+//
+/************************************************************************************************/
+
+/*                                          DEFINE                                              */
+/************************************************************************************************/
+#ifndef MOD_PILE
+#define MOD_PILE
+/************************************************************************************************/
+
+/*                                         INCLUDES                                             */
+/************************************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <time.h>
+//#include <string.h>
+//#include <memory.h>
+/************************************************************************************************/
+
+/*                                        DECLARATION                                           */
+/************************************************************************************************/
+
+void pile_initialiser(int* pile[], int* nb_elements);
+/*
+Cette fonction sert a initialiser une pile et sont nb_elements � NULL.
+
+Parametre : int* pile[]         --> Pointeur sur tableau (qui est notre pile)
+int* nb_elements    --> Pointeur sur le nombre d'�l�ments de la pile
+
+Return : Void
+*/
+/************************************************************************************************/
+
+
+void pile_detruire(int pile[], int* nb_elements);
+/*
+Cette fonction sert a detruire une pile et de remettre son adresse � NULL et le nombre d'�l�ments � 0.
+
+Parametre : int pile[]         --> Tableau (qui est notre pile)
+int* nb_elements    --> Pointeur sur le nombre d'�l�ments de la pile
+
+Return : Void
+*/
+/************************************************************************************************/
+
+void pile_initialiser_version_utile(int* pile[], int* nb_elements, int grandeur_pile);
+/*
+Cette fonction sert a initialiser une pile � un grandeur pr�d�termin�e.
+
+Parametre : int* pile[]         --> Pointeur sur tableau (qui est notre pile)
+int* nb_elements    --> Pointeur sur le nombre d'�l�ments de la pile
+int grandeur_pile    --> grandeur d�sir�e de la pile (i.e. valeur qu'aura le NB d'�l�ment)
+
+Return : Void
+*/
+/************************************************************************************************/
+
+void pile_copier(int* pile_destination[], int *nb_elements_destination, int pile_source[], int nb_elements_source);
+/*
+Cette fonction sert a copier une pile dans un autre.
+
+Parametre : int* pile_destination[]      --> Pointeur vers notre pile de destination
+int *nb_elements_destination     --> pointeur vers le nombre d'�l�ments de la pile de destination
+int pile_source                --> tableau (pile) � copier dans la nouvelle pile
+int nb_element_source           --> Nombre d'�l�ments de la pile de source
+
+Return : Void
+*/
+/************************************************************************************************/
+
+void pile_ajouter(int* pile[], int* nb_elements, int entier);
+/*
+Cette fonction sert a ajouter un element � une pile.
+
+Parametre : int* pile[]         --> Pointeur sur tableau (qui est notre pile)
+int* nb_elements    --> Pointeur sur le nombre d'�l�ments de la pile
+int entier          --> L'entier � ajouter sur le dessus de la pile
+
+Return : Void
+*/
+/************************************************************************************************/
+
+int pile_enlever(int* pile[], int *nb_elements);
+/*
+Cette fonction sert a enlever le dernier �l�ment d'une pile.
+
+Parametre : int* pile[]         --> Pointeur sur tableau (qui est notre pile)
+int* nb_elements    --> Pointeur sur le nombre d'�l�ments de la pile
+
+Return : l'entier qui � �t� enlever
+*/
+
+/************************************************************************************************/
+
+void pile_afficher(int pile[], int nb_elements);
+/*
+Cette fonction sert a afficher tous les �l�ments d'une pile.
+
+Parametre : int* pile[]         --> Pointeur sur tableau (qui est notre pile)
+int nb_elements     --> Nombre d'�l�ments de la pile
+
+Return : Void
+*/
+
+/************************************************************************************************/
+
+void pile_tronquer(int * pile[], int* nb_elements, int indice);
+/*
+Cette fonction permet a l'utlisateur d'effacer le contenue d'une pille ce trouvant apres une certaine
+position dans la pille. De plus, la grosseur de la pille sera ajuste automatique au nombre exact de
+donnee restaint.
+
+Parametre : *pile[] --> addresse du pointeur pointant sur la premi�re case du tableau.
+*nb_elements --> Nombre d'�l�ment contenus dans la pile point�e par "*pile[]".
+indice --> Representation num�rique de la position a la qu'elle la pille doit �tre coup�e.
+
+Return : void
+*/
+
+/************************************************************************************************/
+
+int pile_est_present(int pile[], int nb_elements, int entier);
+/*
+Cette fonction permet de trouver la position d'un entier dans une pile, si cette entier n'est pas
+pr�sent dans la pile, "-1" sera retourn� par la fonction.
+
+Parametre : pile[]  -->  Addresse du premier �l�ment du tableau.
+nb_elements  -->  Nombre d'�l�ment contenue dans le tableau.
+entier  -->  Nombre pour lequelle le programme cherchera �a position dans la pile.
+
+Return : int  -->  Retourne "-1" si l'entier demend� en param�tre n'est pas pr�sent dans la pile.
+Si l'entier est pr�sent, �a position sera retourn�e par la fonction.
+*/
+
+
+/************************************************************************************************/
+
+void pile_concatener(int* pile_destination[], int* nb_elements_destination, int pile_source[], int nb_elements_source);
+/*
+Cette fonction permet de prendre deux piles "A" et "B" et de les mettre bout-�-bout pour cr�� une nouvelle
+pille "AB". La grosseur de la nouvelle pille sera ajust� dynamiquement.
+
+Parametre : *pile_destination[]  --> Pointeur pointant vers la pille ou les deux pille ce retrouveront.
+*nb_elements_destination  --> Nombre d'�l�ment dans la pille "A".
+pile_source[]  --> Addresse de la pille qui sera fusionn�e � la pille "A".
+nb_elements_source  --> Nombre d'�l�ment de la pille "B".
+
+Return : void
+*/
+
+/************************************************************************************************/
+#endif
+
+
+
+///////////////////////////ALEATOIRE H///////////////////////////////////////
+///////////////////////////ALEATOIRE H///////////////////////////////////////
+///////////////////////////ALEATOIRE H///////////////////////////////////////
+///////////////////////////ALEATOIRE H///////////////////////////////////////
+///////////////////////////ALEATOIRE H///////////////////////////////////////
+
+
+/************************************************************************************************/
+//Projet   : Projet TP_2_Labyrinthe
+//Fichier  : Aleatoire.h
+//Contenu  : Contient les fonction relatif a la generation du labyrinthe
+//Objectif : Cr�ation d'un algorithme de r�alisation de labyrinthe
+//Cr�ation : 1 novembre 2014
+//                                                  Cree par Samuel - Link - Geoffroy-Heroux
+//                                                            Francis Masse
+//                                                            Christopher Dom
+//                                                            Vincent Lynch
+//
+/************************************************************************************************/
+
+/*                                          DEFINE                                              */
+/************************************************************************************************/
+#ifndef MOD_ALEATOIRE
+#define MOD_ALEATOIRE
+
+
+/************************************************************************************************/
+
+/*                                         INCLUDES                                             */
+/************************************************************************************************/
+//#include "Module_pile.h"
+//#include "Labyrinthe.h"
+//#include <time.h>
+/************************************************************************************************/
+
+/*                                        DECLARATION                                           */
+/************************************************************************************************/
+void chemin_aleatoire_ajouter_un_pas(int* chemin[], int* longueur_chemin, int nb_lignes_grille, int nb_colonnes_grille);
+/*
+CHEMIN_ALEATOIRE_AJOUTER_UN_PAS
+Cette proc�dure ajoute un pas � un chemin et ajuste sa longueur. La position du prochain pas est choisie au hasard,
+mais doit �tre valide. Si la nouvelle position coupe le chemin existant, la boucle est tronqu�e.
+Observez le chemin pr�sent� ici-bas.
+
+Parametre : 	int* chemin[]		--> Pile contenant le chemin[] � trouver.
+int* longueur_chemin	--> Longueur de la pile chemin[].
+int nb_lignes_grille	--> Limite en i du labyrinthe.
+int nb_colonnes_grille	--> limite en j du labyrithe.
+
+Return : 	Void.
+*/
+/************************************************************************************************/
+static int obtenir_prochaine_position(int chemin[], int *longueur_chemin, int nb_lignes_grille, int nb_colonnes_grille);
+/*
+CHEMIN_ALEATOIRE_AJOUTER_UN_PAS
+Cette fonction retourne la prochaine position � visiter � partir de la derni�re position du chemin courant.
+La position est choisie au hasard et doit �tre valide. La nouvelle position ne doit donc pas sortir du tableau.
+Par exemple, pour le chemin pr�sent� plus haut, la prochaine position est 16, 22 ou 20.
+
+Parametre : 	int* chemin[]		--> Pile contenant le chemin[] � trouver.
+int* longueur_chemin	--> Longueur de la pile chemin[].
+int nb_lignes_grille	--> Limite en i du labyrinthe.
+int nb_colonnes_grille	--> limite en j du labyrithe.
+
+Return : 	int Prochaine position valide.
+*/
+/************************************************************************************************/
+
+#endif
+
+
+
+
+///////////////////////////LABYRINTHE H///////////////////////////////////////
+///////////////////////////LABYRINTHE H///////////////////////////////////////
+///////////////////////////LABYRINTHE H///////////////////////////////////////
+///////////////////////////LABYRINTHE H///////////////////////////////////////
+///////////////////////////LABYRINTHE H///////////////////////////////////////
+
+
+/************************************************************************************************/
+//Projet   : Projet TP_2_Labyrinthe
+//Fichier  : Module_Pile.c
+//Contenu  : Contient des fonctions qui g�re un labyrinthe. Un labyrinthe est represente par une 
+//	     tableau 2D qui contient des murs, des passages, un d�part et une sortie.
+//Objectif : Cr�ation d'un algorithme de r�alisation de labyrinthe.
+//Cr�ation : 27 Octobre 2014
+//                                                  Creer par Samuel - Link - Geoffroy-Heroux
+//                                                            Francis Masse
+//                                                            Christopher Dom
+//                                                            Vincent Lynch
+//
+/************************************************************************************************/
+
+/*                                          DEFINE                                              */
+/************************************************************************************************/
+#ifndef MOD_LABYRINTHE
+#define MOD_LABYRINTHE
+
+// Le nombre de ligne et de colonne du labyrinthe.
+#define LABYRINTHE_NB_LIGNES 9
+#define LABYRINTHE_NB_COLONNES 9
+
+// L'etat possible des cases du labyrinthe.
+#define LABYRINTHE_VIDE 0
+#define LABYRINTHE_MUR 1
+#define LABYRINTHE_ENTREE 2
+#define LABYRINTHE_SORTIE 3
+#define LABYRINTHE_SOLUTION 4
+#define LABYRINTHE_SOLUTION_TEMPORAIRE 5
+
+// Le nombre de voisins possible.
+#define NB_VOISINS 4
+/************************************************************************************************/
+
+/*                                         INCLUDES                                             */
+/************************************************************************************************/
+//#include "Aleatoire.h"
+//#include "Module_Pile.h"
+/************************************************************************************************/
+
+/*                                        DECLARATION                                           */
+/************************************************************************************************/
+
+void labyrinthe_afficher(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES]);
+/*
+LABYRINTHE_AFFICHER
+Cette fonction sert a afficher un labyrinte dans la console.
+
+Parametre : 	int labyrinthe[][]	--> Tableau contenant le labyrinthe � afficher.
+
+Return : 	Void.
+*/
+/************************************************************************************************/
+
+void labyrinthe_convertir_en_image(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], unsigned char image[]);
+
+/************************************************************************************************/
+
+void labyrinthe_initialiser(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES]);
+/*
+LABYRINTHE_INITIALISER
+Cette fonction sert a initialiser un tableau 2D repr�sentant un labyrinthe. Il est initialiser
+seulement avec des murs.
+
+Parametre : 	int labyrinthe[][]	--> Tableau contenant le labyrinthe.
+
+Return : 	Void.
+*/
+/************************************************************************************************/
+
+void labyrinthe_generer(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES]);
+/*
+LABYRINTHE_GENERER
+Cette fonction sert a generer un labyrinthe � l'aide de l'algorithme de Wilson.
+
+Parametre : 	int labyrinthe[][]	--> Tableau contenant le labyrinthe.
+
+Return : 	Void.
+*/
+/************************************************************************************************/
+
+int labyrinthe_resoudre(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int* solution[], int* longueur_solution);
+/*
+LABYRINTHE_RESOUDRE
+Cette fonction permet de r�soudre un labyrinthe, c�est-�-dire trouver le chemin qui m�ne de l�entr�e � la sortie.
+Si une solution est trouv�e, elle est plac�e dans la pile re�ue en param�tre et fonction retourne la valeur 1.
+S�il n�y a pas de solution, la fonction retourne 0.
+
+Parametre : 	int labyrinthe[][]	--> Tableau contenant le labyrinthe.
+int* solution[]		--> Pile contenant les cases de la solution, de l'entr�e � la sortie.
+int* longueur_solution	--> Adresse de la variable contenant la longeur de la pile solution[].
+
+Return : 	int 1;	--> La fonction � trouver une solution.
+int 0; --> La fonction n'a pas trouver de solution.
+*/
+/************************************************************************************************/
+
+void labyrinthe_dessiner_solution(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int solution[], int longueur, int type_solution);
+/*
+LABYRINTHE_DESSINER_SOLUTION
+Cette proc�dure dessine une solution sur la grille du labyrinthe. Pour la dessiner,
+il suffit de modifier l��tat de chaque case du labyrinthe qui se trouve dans la solution.
+Le type de solution peut �tre soit SOLUTION_TEMPORAIRE ou SOLUTION_FINALE.
+
+Parametre : 	int labyrinthe[][]	--> Tableau contenant le labyrinthe.
+int* solution[]		--> Pile contenant les cases de la solution, de l'entr�e � la sortie.
+int* longueur_solution	--> Adresse de la variable contenant la longeur de la pile solution[].
+int type_solution	--> Variable contenant SOLUTION_TEMPORAIRE ou SOLUTION_FINALE
+
+Return : 	Void
+*/
+/************************************************************************************************/
+
+void labyrinthe_dessiner_chemin(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int chemin[], int longueur_chemin);
+/*
+LABYRINTHE_DESSINER_CHEMIN
+Cette proc�dure dessine un chemin (enl�ve les murs) sur la grille du labyrinthe.
+Attention, parce que le chemin est bas� sur une grille de la moiti� de la taille de la grille du labyrinthe,
+il faut dessiner les cases du chemin en plus des cases entre les cases du chemin.
+
+Parametre : 	int labyrinthe[][]	--> Tableau contenant le labyrinthe.
+int* chemin[]		--> Pile contenant les cases d'e la solution'un � dessiner.
+int* longueur_chemin	--> Adresse de la variable contenant la longeur de la pile chemin[].
+
+Return : 	Void.
+*/
+/************************************************************************************************/
+
+void ajouter_un_chemin(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int *chemins[], int* longueurs_chemins, int depart);
+/*
+LABYRINTHE_AJOUTER_CHEMIN
+Cette proc�dure ajoute un chemin au labyrinthe qui part de la case d�part.
+Pour g�n�rer un chemin, on d�marre un nouveau chemin al�atoire � la case d�part
+puis on lui ajoute des pas jusqu�� ce qu�il touche � un chemin du labyrinthe d�j� existant.
+Le param�tre chemins est une pile qui contient tous les chemins du labyrinthe jusqu�� maintenant.
+
+Parametre : 	int labyrinthe[][]	--> Tableau contenant le labyrinthe.
+int* chemin[]		--> Pile contenant les cases d'e la solution'un � dessiner.
+int* longueur_chemin	--> Adresse de la variable contenant la longeur de la pile chemin[].
+int depart		--> Case d�part du nouveau chemin
+
+Return : 	Void.
+*/
+/************************************************************************************************/
+
+static int obtenir_voisins(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int no_case, int voisins[NB_VOISINS], int etat);
+/*
+OBTENIR_VOISINS
+Cette fonction permet d�obtenir le nombre de voisins d�une case du labyrinthe ainsi que leurs indices de position.
+Seulement les voisins valides (dans la grille du labyrinthe) et qui ont un �tat correspondant � celui re�u
+en param�tre sont retourn�s dans le tableau voisins.
+
+Parametre : 	int labyrinthe[][]	--> Tableau contenant le labyrinthe.
+int no_case		--> Variable contenant la position que l'on veut regarder les voisins.
+int voisins[]		--> Tableau[] contenant les positions des voisins possibles.
+Remplace par "-1" si la cases n'est pas un voisin
+int etat		--> Type d'�tat que doit regarder la fonction : "solution" ou "vide"
+
+Return : 	int nombre de voisins
+*/
+/************************************************************************************************/
+
+static int obtenir_etat(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int position)
+{
+	//Cette Fonction est � changer pour l'algorithme trouver plus bas pour trouver les i et les j
+	int position_x, position_y;
+
+	position_x = position / LABYRINTHE_NB_LIGNES;
+	position_y = position % LABYRINTHE_NB_COLONNES;
+	return labyrinthe[position_x][position_y];
+}
+
+static int est_vide(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int position)
+{
+	int vide = obtenir_etat(labyrinthe, position);
+
+	if (vide == LABYRINTHE_VIDE)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+static int est_sortie(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int position)
+{
+	int sortie = obtenir_etat(labyrinthe, position);
+
+	if (sortie == LABYRINTHE_SORTIE)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+static void ajouter_sortie(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES])
+{
+	int y = LABYRINTHE_NB_LIGNES; //commence en y sur la bordure du bas
+
+	while (labyrinthe[LABYRINTHE_NB_LIGNES - 1][y] != LABYRINTHE_SORTIE)
+								  //commence en x dans l'avant derniere colonne
+		{
+		y--;
+
+		if (labyrinthe[LABYRINTHE_NB_LIGNES - 1][y] == LABYRINTHE_VIDE)
+			{
+			labyrinthe[LABYRINTHE_NB_LIGNES - 1][y] = LABYRINTHE_SORTIE;
+				return;
+			}
+		}	
+}
+
+
+
+
+#endif
+
+
+
+
+///////////////////////////   MAIN   ///////////////////////////////////////
+///////////////////////////   MAIN   ///////////////////////////////////////
+///////////////////////////   MAIN   ///////////////////////////////////////
+///////////////////////////   MAIN   ///////////////////////////////////////
+///////////////////////////   MAIN   ///////////////////////////////////////
+
+
+
+
+
+
+
+
+
+int main(void)
+{
+	int *chemin1 = (int *)malloc(1 * sizeof(int));
+
+	int *longueur = (int *)malloc(1 * sizeof(int));;
+
+	int nb_lignes = 4;
+
+	int nb_colonnes = 4;
+
+	int le_labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES] = { 0 };
+
+	int voisinage[NB_VOISINS] = { -2 , -2, -2, -2 };
+
+	int x = 0;
+	int y = 0;
+
+	*longueur = 1;
+	*chemin1 = 1;
+
+
+	//printf("TEST DE OBTENIR_PROCHAINE_POSITION\n");
+	//printf("*longueur est egal a %d\n", *longueur);
+	//printf("*chemin1 est egal a %d\n", *chemin1);
+	//printf("De 1, la prochaine position sera: %d\n\n\n", obtenir_prochaine_position(chemin1, longueur, nb_lignes, nb_colonnes));
+
+	//
+	//for (x=1; x < 9 ; x++)
+	//{
+	//printf("\nTEST DE CHEMIN_ALEATOIRE_AJOUTER_UN_PAS\n");
+	//printf("chemin_aleatoire_ajouter_un_pas_ici\n");
+	//chemin_aleatoire_ajouter_un_pas (&chemin1, longueur, nb_lignes, nb_colonnes);
+	//printf("*longueur est egal a %d\n\n", *longueur);
+
+	//for (y=0; y<*longueur; y++)
+	//{
+	//printf("chemin1[%d] est egal a %d\n", y, chemin1[y]);
+	//}
+	//}
+	
+
+
+
+	labyrinthe_initialiser(le_labyrinthe);
+
+	//le_labyrinthe[8][4] = 0;
+	//le_labyrinthe[1][1] = 0;
+	//le_labyrinthe[3][4] = 0;
+
+	ajouter_sortie(le_labyrinthe);
+
+	for (y = 0; y<LABYRINTHE_NB_LIGNES; y++)
+	{
+		for (x = 0; x<LABYRINTHE_NB_COLONNES; x++)
+		{
+			printf("%d  ", le_labyrinthe[x][y]);
+		}
+		printf("\n");
+	}
+
+	//printf("\nobtenir_etat de la %deme position du labyrinthe:%d\n", 29, obtenir_etat(le_labyrinthe, 29));
+	//printf("\nobtenir_etat de la %deme position du labyrinthe:%d\n", 30, obtenir_etat(le_labyrinthe, 30));
+	//printf("\nobtenir_etat de la %deme position du labyrinthe:%d\n\n", 10, obtenir_etat(le_labyrinthe, 10));
+
+	//printf("\nest_vide de la %deme position du labyrinthe: %d\n", 29, est_vide(le_labyrinthe, 29));
+	//printf("\nest_vide de la %deme position du labyrinthe: %d\n", 30, est_vide(le_labyrinthe, 30));
+	//printf("\nest_vide de la %deme position du labyrinthe: %d\n\n", 10, est_vide(le_labyrinthe, 10));
+
+	//printf("\nest_sortie de la %deme position du labyrinthe: %d\n", 29, est_sortie(le_labyrinthe, 29));
+	//printf("\nest_sortie de la %deme position du labyrinthe: %d\n", 30, est_sortie(le_labyrinthe, 30));
+	//printf("\nest_sortie de la %deme position du labyrinthe: %d\n\n\n", 10, est_sortie(le_labyrinthe, 10));
+
+
+	//obtenir_voisins(le_labyrinthe, 30, voisinage, LABYRINTHE_MUR);
+
+	//printf("Les voisins mur de case 30 sont, en ordre, %d, %d, %d et %d", voisinage[0], voisinage[1], voisinage[2], voisinage[3]);
+
+	return 0;
+}
+
+
+///////////////////////////PILE C///////////////////////////////////////
+///////////////////////////PILE C///////////////////////////////////////
+///////////////////////////PILE C///////////////////////////////////////
+///////////////////////////PILE C///////////////////////////////////////
+///////////////////////////PILE C///////////////////////////////////////
+
+
+//#include "Module_pile.h"
+
+/*                                        DEFINITION                                            */
+/************************************************************************************************/
+
+void pile_initialiser(int* pile[], int* nb_elements)
+{
+	*nb_elements = 0;
+
+	*pile = (int *)calloc(*nb_elements + 1, sizeof(int*));
+	assert(*pile != NULL);
+}
+
+void pile_detruire(int pile[], int* nb_elements)
+{
+
+	*nb_elements = 0;
+	free(pile);
+	pile = NULL;
+}
+
+void pile_initialiser_version_utile(int* pile[], int* nb_elements, int grandeur_pile)
+{
+
+	*nb_elements = grandeur_pile;
+
+	*pile = (int *)calloc(*nb_elements, sizeof(int*));
+
+	/*cr�� le NB de m�moire pour accueillir grandeur_pile NB de bytes
+	assigne l'adresse du d�but de ce bloc de m�moire � l'adresse de pile[0]*/
+	assert(*pile != NULL);
+}
+
+void pile_copier(int* pile_destination[], int *nb_elements_destination, int pile_source[], int nb_elements_source)
+{
+
+	int d = *nb_elements_destination - 1;
+	int i = nb_elements_source - 1;
+
+	//Utilisation de memcpy � la place
+	for (; (i >= 0) && (d >= 0); i--)
+	{
+		*(*pile_destination + d) = *(pile_source + i);
+		d--;
+	}
+}
+
+void pile_ajouter(int* pile[], int* nb_elements, int entier)
+{
+
+	//Initialisation des variables temporaire
+	int nb_ele_temp;
+	int* pile_temp = NULL;
+
+	//Allocation de la memoire temporaire
+	pile_initialiser_version_utile(&pile_temp, &nb_ele_temp, *nb_elements + 1); //On veut un tableau une case plus grande
+
+	//Verification si le pointeur est en erreur
+	//assert((pile_temp) != NULL);
+
+	pile_copier(&pile_temp, &nb_ele_temp, *pile, *nb_elements);
+	*pile_temp = entier; //assigne l'entier � la position 0 de la nouvelle pile
+
+	free(*pile);               //Lib�ration de la premi�re pile
+	*pile = pile_temp;         //assignation de la nouvelle pile
+	(*nb_elements)++;
+}
+
+int pile_enlever(int* pile[], int* nb_elements)
+{
+	//sauvegarde l'entier qui sera enlev�
+	int entier_enleve = **pile;
+
+	//Initialisation des variables temporaire
+	int nb_ele_temp;
+	int* pile_temp = NULL;
+
+	//Allocation de la memoire temporaire
+	pile_initialiser_version_utile(&pile_temp, &nb_ele_temp, *nb_elements - 1); //On veut un tableau une case plus petite
+
+	//Verification si le pointeur est en erreur
+	//assert((pile_temp) != NULL);
+
+	pile_copier(&pile_temp, &nb_ele_temp, *pile, *nb_elements);
+
+	free(*pile);               //Lib�ration de la premi�re pile
+	*pile = pile_temp;           //assignation de la nouvelle pile
+	(*nb_elements)--;
+
+	return entier_enleve;
+}
+
+void pile_afficher(int pile[], int nb_elements)
+{
+	//Affiche tous les �l�ments de la pile
+	int i;
+
+	for (i = 0; i < nb_elements; i++)
+	{
+		printf("Deplacement #%d : %d\n", i, pile[i]);
+	}
+}
+
+void pile_tronquer(int * pile[], int* nb_elements, int indice)
+{
+	//Initialisation des variables temporaire
+	int nb_ele_temp;
+	int* pile_temp = NULL;
+
+	//Allocation de la memoire temporaire
+	pile_initialiser_version_utile(&pile_temp, &nb_ele_temp, indice + 1); //On veut un tableau de grosseur indice+1
+
+	//Verification si le pointeur est en erreur
+	//assert((pile_temp) != NULL);
+
+	pile_copier(&pile_temp, &nb_ele_temp, *pile, *nb_elements);
+
+	free(*pile);               //Lib�ration de la premi�re pile
+	*pile = pile_temp;           //assignation de la nouvelle pile
+	(*nb_elements) = indice + 1;
+
+	//il est important de noter que cette fonction enleve la fin (le dessus) de notre pile, 
+	//mais comme le dessus de notre pile est a l'indice 0, elle tronque a partir de l'element 0
+	//afin qu'il RESTE (indice+1) element dans la pile
+}
+
+int pile_est_present(int pile[], int nb_elements, int entier)
+{
+	int x = 0;
+
+	for (x = 0; x < nb_elements; x++)
+	{
+		if (pile[x] == entier)
+		{
+			return x;
+		}
+	}
+	return -1;
+}
+
+void pile_concatener(int* pile_destination[], int* nb_elements_destination, int pile_source[], int nb_elements_source)
+{
+
+	//Initialisation des variables temporaire
+	int nb_ele_temp;
+	int* pile_temp = NULL;
+
+	//Allocation de la memoire temporaire
+	//On veut un tableau qui aura la grandeur des 2 tableaux r�unis
+	pile_initialiser_version_utile(&pile_temp, &nb_ele_temp, *nb_elements_destination + nb_elements_source);
+
+	//Verification si le pointeur est en erreur
+	//assert((pile_temp) != NULL);
+
+	//le dernier element (0) de pile_source sera sur le dessus de la nouvelle pile (0)
+	pile_copier(&pile_temp, &nb_ele_temp, *pile_destination, *nb_elements_destination);
+
+	pile_temp -= *nb_elements_destination; //some fucked up arithmetic, was on acid.
+	pile_copier(&pile_temp, &nb_ele_temp, pile_source, nb_elements_source);
+	pile_temp += *nb_elements_destination;
+
+	free(pile_source);					  //Lib�ration de la pile source
+	free(*pile_destination);			  //Lib�ration de la pile source
+
+	*pile_destination = pile_temp;         //assignation de la nouvelle pile
+	*nb_elements_destination = *nb_elements_destination + nb_elements_source;
+}
+
+
+
+
+///////////////////////////ALEATOIRE C///////////////////////////////////////
+///////////////////////////ALEATOIRE C///////////////////////////////////////
+///////////////////////////ALEATOIRE C///////////////////////////////////////
+///////////////////////////ALEATOIRE C///////////////////////////////////////
+///////////////////////////ALEATOIRE C///////////////////////////////////////
+
+
+//#include "Module_Pile.h"
+//#include "Labyrinthe.h"
+//#include "Aleatoire.h"
+
+/************************************************************************************************/
+/*                                        DEFINITION                                            */
+/************************************************************************************************/
+
+static int obtenir_prochaine_position(int chemin[], int *longueur_chemin, int nb_lignes_grille, int nb_colonnes_grille)
+{
+	srand(time(NULL)); //au pire on le laisse drette la
+
+	int position_x = chemin[0] / nb_lignes_grille;
+	int position_y = chemin[0] % nb_lignes_grille;
+	int old_position_x = chemin[1] / nb_lignes_grille;
+	int old_position_y = chemin[1] % nb_lignes_grille;
+	int changement_y = 0, changement_x = 0;
+	int nombre_a_renvoyer;
+
+	if (*longueur_chemin == 1) //si la poile est de 1 seul element
+	{
+		old_position_x = -1;	//assigne les valeur precedente de x a des valeurs qui ne peuvent etre atteintes
+		old_position_y = -1;
+	}
+
+	while ((!(changement_y == 0) && !(changement_x == 0))
+		|| (changement_y == 0 && changement_x == 0)
+		|| ((old_position_x == position_x) && (old_position_y == position_y)))
+	{
+		do {
+			position_x = chemin[0] / nb_lignes_grille;	//reinitialise la position a sa valeur originale
+			changement_x = (rand() % 3) - 1; //genere un NB random de -1, 0 ou 1
+			position_x += changement_x; //la position change de changement_x
+		} while ((position_x < 0) || (position_x >= (nb_colonnes_grille)));
+
+		do {
+			position_y = chemin[0] % nb_lignes_grille;	//reinitialise la position a sa valeur originale
+			changement_y = (rand() % 3) - 1;	//genere un NB random de -1, 0 ou 1
+			position_y += changement_y;		//la position change de changement_x
+		} while ((position_y < 0) || (position_y >= nb_lignes_grille));
+
+
+	}
+
+	nombre_a_renvoyer = ((nb_lignes_grille*position_x) + position_y);
+	return nombre_a_renvoyer;
+
+}
+
+void chemin_aleatoire_ajouter_un_pas(int* chemin[], int* longueur_chemin, int nb_lignes_grille, int nb_colonnes_grille)
+{
+	int prochain_pas = 0;
+	int position = 0;
+	prochain_pas = obtenir_prochaine_position(*chemin, longueur_chemin, nb_lignes_grille, nb_colonnes_grille);
+	position = pile_est_present(*chemin, *longueur_chemin, prochain_pas);
+	if (position > 0)
+	{
+		pile_tronquer(chemin, longueur_chemin, position);
+	}
+	else
+	{
+		pile_ajouter(chemin, longueur_chemin, prochain_pas);
+	}
+
+}
+
+
+
+///////////////////////////LARYRINTHE C///////////////////////////////////////
+///////////////////////////LARYRINTHE C///////////////////////////////////////
+///////////////////////////LARYRINTHE C///////////////////////////////////////
+///////////////////////////LARYRINTHE C///////////////////////////////////////
+///////////////////////////LARYRINTHE C///////////////////////////////////////
+
+
+
+//#include "Labyrinthe.h"
+
+
+/************************************************************************************************/
+/*                                        DEFINITION                                            */
+/************************************************************************************************/
+
+void labyrinthe_initialiser(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES])
+{
+	int i, j;
+
+	//Parcour le tableau[][] au complet et place un "mur" dans toutes les cases
+	for (i = 0; i < LABYRINTHE_NB_LIGNES; i++)
+	{
+		for (j = 0; j < LABYRINTHE_NB_COLONNES; j++)
+		{
+			labyrinthe[i][j] = LABYRINTHE_MUR;
+		}
+	}
+}
+
+void labyrinthe_dessiner_solution(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int solution[], int longueur, int type_solution)
+{
+	int k;
+
+	for (k = 0; k < longueur; k++)
+	{
+		int position_actuel = solution[k];
+		int prochaine_position = solution[k + 1];
+		int i = 1, j = 1;
+
+		//Prochaine position est en dessous de la position actuel
+		if (prochaine_position == position_actuel + 1)
+		{
+			j++; //Modification de i++
+			if (type_solution == LABYRINTHE_SOLUTION_TEMPORAIRE)
+			{
+				labyrinthe[i][j] = LABYRINTHE_SOLUTION_TEMPORAIRE;
+				if (k != longueur - 1)
+				{
+					j++; //Modification de i++
+					labyrinthe[i][j] = LABYRINTHE_SOLUTION_TEMPORAIRE;
+				}
+			}
+			else if (type_solution == LABYRINTHE_SOLUTION)
+			{
+				labyrinthe[i][j] = LABYRINTHE_SOLUTION;
+				if (k != longueur - 1)
+				{
+					i++;
+					labyrinthe[i][j] = LABYRINTHE_SOLUTION;
+				}
+			}
+			else
+			{
+				printf("Type de solution inconnue");
+			}
+		}
+
+		//Prochaine position est a droite de la position actuel
+		else if (prochaine_position == position_actuel + ((LABYRINTHE_NB_LIGNES - 1) / 2))
+		{
+			if (type_solution == LABYRINTHE_SOLUTION_TEMPORAIRE)
+			{
+				j++;
+				labyrinthe[i][j] = LABYRINTHE_SOLUTION_TEMPORAIRE;
+				if (k != longueur - 1)
+				{
+					j++;
+					labyrinthe[i][j] = LABYRINTHE_SOLUTION_TEMPORAIRE;
+				}
+			}
+			else if (type_solution == LABYRINTHE_SOLUTION)
+			{
+				j++;
+				labyrinthe[i][j] = LABYRINTHE_SOLUTION;
+				if (k != longueur - 1)
+				{
+					j++;
+					labyrinthe[i][j] = LABYRINTHE_SOLUTION;
+				}
+			}
+			else
+			{
+				printf("Type de solution inconnue");
+			}
+		}
+
+		//Prochaine position est au dessus de la position actuel
+		else if (prochaine_position == position_actuel - 1)
+		{
+			if (type_solution == LABYRINTHE_SOLUTION_TEMPORAIRE)
+			{
+				i--;
+				labyrinthe[i][j] = LABYRINTHE_SOLUTION_TEMPORAIRE;
+				if (k != longueur - 1)
+				{
+					i--;
+					labyrinthe[i][j] = LABYRINTHE_SOLUTION_TEMPORAIRE;
+				}
+			}
+			else if (type_solution == LABYRINTHE_SOLUTION)
+			{
+				i--;
+				labyrinthe[i][j] = LABYRINTHE_SOLUTION;
+				if (k != longueur - 1)
+				{
+					i--;
+					labyrinthe[i][j] = LABYRINTHE_SOLUTION;
+				}
+			}
+			else
+			{
+				printf("Type de solution inconnue");
+			}
+		}
+
+		//Prochaine position est a gauche de la position actuel
+		else if (prochaine_position == position_actuel - ((LABYRINTHE_NB_LIGNES - 1) / 2))
+		{
+			if (type_solution == LABYRINTHE_SOLUTION_TEMPORAIRE)
+			{
+				j--;
+				labyrinthe[i][j] = LABYRINTHE_SOLUTION_TEMPORAIRE;
+				if (k != longueur - 1)
+				{
+					j--;
+					labyrinthe[i][j] = LABYRINTHE_SOLUTION_TEMPORAIRE;
+				}
+			}
+			else if (type_solution == LABYRINTHE_SOLUTION)
+			{
+				j--;
+				labyrinthe[i][j] = LABYRINTHE_SOLUTION;
+				if (k != longueur - 1)
+				{
+					j--;
+					labyrinthe[i][j] = LABYRINTHE_SOLUTION;
+				}
+			}
+			else
+			{
+				printf("Type de solution inconnue");
+			}
+		}
+	}
+}
+
+void labyrinthe_dessiner_chemin(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int chemin[], int longueur_chemin)
+{
+	int k;
+
+	for (k = 0; k < longueur_chemin; k++)
+	{
+		int position_actuel = chemin[k];
+		int prochaine_position = chemin[k + 1];
+		int i, j, c;
+
+		//Prochaine position est en dessous de la position actuel
+		if (prochaine_position == position_actuel + 1)
+		{
+			//Pour trouver j
+			for (c = 0; c < ((LABYRINTHE_NB_COLONNES - 1) / 2) - 1; c++)
+			{
+				if (position_actuel >(((LABYRINTHE_NB_LIGNES - 1) / 2) * c) && position_actuel <= (((LABYRINTHE_NB_LIGNES - 1) / 2) * (c + 1)))
+				{
+					j = (c + (c + 1));
+				}
+			}
+
+			//Pour trouvez i
+			i = (prochaine_position + position_actuel) % (LABYRINTHE_NB_LIGNES - 1);
+			i++; //Modification de i++
+
+			labyrinthe[i][j] = LABYRINTHE_VIDE;
+			if (k != longueur_chemin - 1)
+			{
+				i++; //Modification de i++
+				labyrinthe[i][j] = LABYRINTHE_VIDE;
+			}
+		}
+
+		//Prochaine position est a droite de la position actuel
+		else if (prochaine_position == position_actuel + ((LABYRINTHE_NB_LIGNES - 1) / 2))
+		{
+			//Pour trouver i
+			i = (position_actuel % (((LABYRINTHE_NB_LIGNES - 1) / 2) * 2) + 1);
+
+			//Pour trouver j et creuser
+			for (c = 0; c < ((LABYRINTHE_NB_COLONNES - 1) / 2) - 1; c++)
+			{
+				if (position_actuel >(((LABYRINTHE_NB_LIGNES - 1) / 2) * c) && position_actuel <= (((LABYRINTHE_NB_LIGNES - 1) / 2) * (c + 1)))
+				{
+					j = (c + (c + 1));
+					labyrinthe[i][j] = LABYRINTHE_VIDE;
+					j++;
+					labyrinthe[i][j] = LABYRINTHE_VIDE;
+					if (k != longueur_chemin - 1)
+					{
+						j++;
+						labyrinthe[i][j] = LABYRINTHE_VIDE;
+					}
+				}
+			}
+		}
+
+		//Prochaine position est au dessus de la position actuel
+		else if (prochaine_position == position_actuel - 1)
+		{
+			//Pour trouver j
+			for (c = 0; c < ((LABYRINTHE_NB_COLONNES - 1) / 2) - 1; c++)
+			{
+				if (position_actuel >(((LABYRINTHE_NB_LIGNES - 1) / 2) * c) && position_actuel <= (((LABYRINTHE_NB_LIGNES - 1) / 2) * (c + 1)))
+				{
+					j = (c + (c + 1));
+				}
+			}
+
+			//Pour trouver i
+			i = (prochaine_position + position_actuel) % (LABYRINTHE_NB_LIGNES - 1);
+			i++;
+
+			labyrinthe[i][j] = LABYRINTHE_VIDE;
+			if (k != longueur_chemin - 1)
+			{
+				i++;
+				labyrinthe[i][j] = LABYRINTHE_VIDE;
+			}
+		}
+
+		//Prochaine position est a gauche de la position actuel
+		else if (prochaine_position == position_actuel + ((LABYRINTHE_NB_LIGNES - 1) / 2))
+		{
+			//Pour trouver i
+			i = (position_actuel % (((LABYRINTHE_NB_LIGNES - 1) / 2) * 2) + 1);
+
+			//Pour trouver j et creuser
+			for (c = 0; c < ((LABYRINTHE_NB_COLONNES - 1) / 2) - 1; c++)
+			{
+				if (position_actuel >(((LABYRINTHE_NB_LIGNES - 1) / 2) * c) && position_actuel <= (((LABYRINTHE_NB_LIGNES - 1) / 2) * (c + 1)))
+				{
+					j = (c + (c + 1));
+					labyrinthe[i][j] = LABYRINTHE_VIDE;
+					j--;
+					labyrinthe[i][j] = LABYRINTHE_VIDE;
+					if (longueur_chemin != 0)
+					{
+						j--;
+						labyrinthe[i][j] = LABYRINTHE_VIDE;
+					}
+				}
+			}
+		}
+	}
+}
+
+void labyrinthe_generer(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES])
+{
+	int k;
+	int nb_colonnes = ((LABYRINTHE_NB_COLONNES - 1) / 2);
+	int nb_lignes = ((LABYRINTHE_NB_LIGNES - 1) / 2);
+	int *chemins[] = { NULL };
+	int longueurs_chemins;
+
+	labyrinthe_initialiser(labyrinthe);
+	labyrinthe[1][1] = LABYRINTHE_VIDE;
+
+	for (k = 0; k < (nb_colonnes * nb_lignes) - 1; k++)
+	{
+		if (k == LABYRINTHE_MUR)
+		{
+			ajouter_un_chemin(labyrinthe, chemins, &longueurs_chemins, k);
+			labyrinthe_dessiner_chemin(labyrinthe, *chemins, longueurs_chemins);
+		}
+	}
+	ajouter_sortie(labyrinthe);
+	labyrinthe[1][1] = LABYRINTHE_ENTREE;
+}
+
+int labyrinthe_resoudre(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int* solution[], int* longueur_solution)
+{
+	int i, j, k;
+	int depart = 0;
+	int *pile_visite[] = { NULL };
+	int *voisins[] = { NULL };
+	int longueur_visite = 0;
+
+	for (i = 0; i < LABYRINTHE_NB_LIGNES; i++)
+	{
+		for (j = 0; j < LABYRINTHE_NB_COLONNES; j++)
+		{
+			if (labyrinthe[i][j] == LABYRINTHE_ENTREE)
+			{
+				depart = (i / 2) + (4 * (j / 2));
+			}
+		}
+	}
+	pile_ajouter(solution, longueur_solution, depart);
+	pile_ajouter(pile_visite, &longueur_visite, depart);
+
+	while (longueur_solution > 0 && (*solution)[0] != LABYRINTHE_SORTIE)
+	{
+		int sortie_trouve = 0;
+		obtenir_voisins(labyrinthe, (*solution)[0], *voisins, LABYRINTHE_SORTIE);
+		for (k = 0; k < NB_VOISINS - 1; k++)
+		{
+			if ((*voisins)[k] != -1)
+			{
+				pile_ajouter(solution, longueur_solution, (*voisins)[k]);
+				sortie_trouve = 1;
+			}
+		}
+		if (!sortie_trouve)
+		{
+			int voisin_disponible = 0;
+
+			obtenir_voisins(labyrinthe, (*solution)[0], *voisins, LABYRINTHE_VIDE);
+
+			//comparer a pile_visite
+
+			for (k = 0; k < NB_VOISINS; k++)
+			{
+				if (pile_est_present(*solution, *longueur_solution, (*voisins)[k]) != -1)
+				{
+					(*voisins)[k] = -1;
+				}
+			}
+			for (k = 0; k < NB_VOISINS; k++)
+			{
+
+			}
+			for (k = 0; k < NB_VOISINS; k++)
+			{
+				if ((*voisins)[k] != -1)
+				{
+					voisin_disponible++;
+				}
+			}
+
+			//Gestion des voisin commence ici
+
+			pile_ajouter(solution, longueur_solution, (*voisins)[rand() % voisin_disponible]);
+			pile_ajouter(pile_visite, &longueur_visite, (*voisins)[rand() % voisin_disponible]);
+
+			//si pu de voisin
+			if (voisin_disponible == 0)
+			{
+				//A DEFINIR
+			}
+
+		}
+	}
+	return 0; //A ENLEVER
+}
+
+void ajouter_un_chemin(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int* chemins[], int* longueurs_chemins, int depart)
+{
+	int position_x;
+	int position_y;
+	int position_gros_tableau;
+
+	pile_initialiser_version_utile(chemins, longueurs_chemins, 1);
+	*chemins[0] = depart;
+
+	do
+	{
+		chemin_aleatoire_ajouter_un_pas(chemins, longueurs_chemins, (LABYRINTHE_NB_LIGNES - 1) / 2, (LABYRINTHE_NB_COLONNES - 1) / 2);//ajoute un nouveau pas au chemin
+
+		position_x = *chemins[0] / ((LABYRINTHE_NB_LIGNES - 1) / 2);	//coordonee en x dans le tableau de 4x4
+		position_y = *chemins[0] % ((LABYRINTHE_NB_COLONNES - 1) / 2); //coordonee en y dans le tableau de 4x4
+
+		position_x = position_x * 2 + 1;	//coordonee en x dans le tableau de 9x9
+		position_y = position_y * 2 + 1;	//coordonee en y dans le tableau de 9x9
+
+		position_gros_tableau = ((LABYRINTHE_NB_LIGNES*position_x) + position_y);
+
+
+	} while (!est_vide(labyrinthe, position_gros_tableau));
+	//donne prochaine position � ajouter au chemin, si valide, ajoute, sinon tronque
+}
+
+static int obtenir_voisins(int labyrinthe[LABYRINTHE_NB_LIGNES][LABYRINTHE_NB_COLONNES], int no_case, int voisins[NB_VOISINS], int etat)
+{
+	int x = 0;
+	int buffer;
+
+	if (obtenir_etat(labyrinthe, no_case + 1) == etat) //case du bas
+		voisins[0] = no_case + 1;
+	else
+		voisins[0] = -1;
+
+	if (obtenir_etat(labyrinthe, no_case - 1) == etat) //case du haut
+		voisins[1] = no_case - 1;
+	else
+		voisins[1] = -1;
+
+	if (obtenir_etat(labyrinthe, no_case + LABYRINTHE_NB_COLONNES) == etat) //case a droite
+		voisins[2] = no_case + LABYRINTHE_NB_COLONNES;
+	else
+		voisins[2] = -1;
+
+	if (obtenir_etat(labyrinthe, no_case - LABYRINTHE_NB_COLONNES) == etat) //case a gauche
+		voisins[3] = no_case - LABYRINTHE_NB_COLONNES;
+	else
+		voisins[3] = -1;
+
+	while (!(x == 4))
+	{
+		if (voisins[x + 1] > voisins[x])
+		{
+			buffer = voisins[x];
+			voisins[x] = voisins[x + 1];
+			voisins[x + 1] = buffer;
+			x = 0;
+		}
+		else
+			x++;
+	}
+	return 0; //A ENLEVER
+
+	//Cette fonction permet d�obtenir le nombre de voisins d�une case du labyrinthe ainsi que leurs indices de position. 
+	//Seulement les voisins valides (dans la grille du labyrinthe) et qui ont un �tat correspondant � celui re�u en param�tre sont retourn�s dans le tableau voisins. 
+}
+
+//obtenir_prochaine_position C pointeur longueur chemin
+//obtenir_prochaine_position H pointeur longueur chemin
+//chemin_aleatoire_ajouter_un_pas C : prochain_pas = obtenir_prochaine_position(===> *longueur_chemin)
+//Ajout de time.h dans les lib
+//changement de obtenir_etat d'un tableau de 4x4 a un tableau de 9x9
+//changement de ajouter_sortie pour que la sortie soit dans tableau 9x9
+//mis statique int de multiples fonction de labyrinthe.c dans le h file
+//TO SOLVE obtenir voisin doit retourner les voisins valides
+//TO SOLVE labyrinthe_resoudre Si solution return 1 sinon return 0
